@@ -1,0 +1,10 @@
+{
+  "name": "plantuml-to-drawio",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Convert PlantUML to draw.io XML",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "npx serve demo"
+  }
+}

@@ -1,7 +1,9 @@
-// renderer.js
 import { getStyle } from "./shapes.js";
+import { computeLayout } from "./layout.js";
 
 export function render(diagram) {
+  const positions = computeLayout(diagram);
+
   let xml = `
   <mxfile>
     <diagram>
@@ -11,20 +13,19 @@ export function render(diagram) {
           <mxCell id="1" parent="0"/>
   `;
 
-  let y = 20;
-
   // Nodes
   for (const node of diagram.nodes) {
+    const pos = positions.get(node.id) || { x: 0, y: 0 };
+
     xml += `
       <mxCell id="${node.id}" value="${node.label}" style="${getStyle(node.type)}"
         vertex="1" parent="1">
-        <mxGeometry x="20" y="${y}" width="80" height="40" as="geometry"/>
+        <mxGeometry x="${pos.x}" y="${pos.y}" width="80" height="40" as="geometry"/>
       </mxCell>
     `;
-    y += 80;
   }
 
-  // Edges
+  // Edges (unchanged)
   let edgeId = 1000;
 
   for (const edge of diagram.edges) {
